@@ -1,0 +1,8 @@
+services:
+  nest_mongo:
+    build: .
+    image: nest_mongo:${MONGO_DB_TAG}
+    container_name: nest_mongo
+    restart: always
+    ports:
+      - '8000:8000'
