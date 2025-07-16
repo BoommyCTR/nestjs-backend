@@ -1,13 +1,16 @@
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsMongoId, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
   readonly name: string;
 
   @IsString()
-  @IsOptional()
-  readonly description?: string;
+  readonly category: string;
 
   @IsNumber()
   readonly price: number;
+
+  @IsOptional()
+  @IsMongoId()
+  readonly user?: string;
 }
