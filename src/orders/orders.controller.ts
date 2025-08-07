@@ -10,12 +10,27 @@ import {
   Delete,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { CreateOrderDto } from './dto/create-order.dto';
+import {
+  CreateApplyDiscountsDto,
+  CreateOrderDto,
+} from './dto/create-order.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/applyDiscounts')
+  applyDiscounts(
+    @Body() createApplyDiscountsDto: CreateApplyDiscountsDto,
+    @Request() req,
+  ) {
+    return this.ordersService.applyDiscounts(
+      req.user.userId,
+      createApplyDiscountsDto.selectedCampaigns,
+    );
+  }
 
   @UseGuards(JwtAuthGuard)
   @Post()
